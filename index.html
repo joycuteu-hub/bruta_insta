@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bruta_Insta</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ background:#100e16;
+ color:white;
+ font-family:Arial,sans-serif;
+ padding-bottom:75px;
+}
+header{
+ padding:18px;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ border-bottom:1px solid #302a3a;
+}
+.logo{
+ font-size:25px;
+ font-weight:bold;
+ color:#b78aff;
+}
+.stories{
+ display:flex;
+ gap:15px;
+ overflow-x:auto;
+ padding:16px;
+}
+.story{text-align:center;min-width:65px;font-size:12px}
+.story img{
+ width:58px;height:58px;
+ border-radius:50%;
+ border:3px solid #a855f7;
+ object-fit:cover;
+}
+.post{
+ margin:15px;
+ background:#201b29;
+ border-radius:14px;
+ overflow:hidden;
+}
+.user{
+ display:flex;
+ align-items:center;
+ gap:10px;
+ padding:12px;
+}
+.avatar{
+ width:38px;height:38px;
+ border-radius:50%;
+ object-fit:cover;
+}
+.post img.photo{
+ width:100%;
+ max-height:420px;
+ object-fit:cover;
+}
+.actions{padding:12px;font-size:23px}
+.actions button{
+ background:none;
+ border:0;
+ color:white;
+ font-size:23px;
+ margin-right:12px;
+}
+.caption{padding:0 12px 15px}
+nav{
+ position:fixed;
+ bottom:0;
+ left:0;
+ right:0;
+ background:#1b1722;
+ display:flex;
+ justify-content:space-around;
+ padding:15px 5px;
+ border-top:1px solid #393044;
+}
+nav button{
+ background:none;
+ border:0;
+ color:white;
+ font-size:22px;
+}
+.page{display:none}
+.page.active{display:block}
+.profile{text-align:center;padding:30px}
+.profile img{
+ width:90px;height:90px;
+ border-radius:50%;
+}
+.primary{
+ background:#9333ea;
+ color:white;
+ border:0;
+ padding:12px 20px;
+ border-radius:20px;
+ margin:10px;
+}
+input{max-width:100%}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">Bruta_Insta ✨</div>
+<div>💬</div>
+</header>
+
+<div id="home" class="page active">
+
+<div class="stories">
+<div class="story">
+<img src="https://i.pravatar.cc/100?img=1">
+<p>Your story</p>
+</div>
+<div class="story">
+<img src="https://i.pravatar.cc/100?img=2">
+<p>Sarah</p>
+</div>
+<div class="story">
+<img src="https://i.pravatar.cc/100?img=3">
+<p>David</p>
+</div>
+<div class="story">
+<img src="https://i.pravatar.cc/100?img=4">
+<p>Grace</p>
+</div>
+<div class="story">
+<img src="https://i.pravatar.cc/100?img=5">
+<p>Michael</p>
+</div>
+</div>
+
+<div id="feed">
+
+<div class="post">
+<div class="user">
+<img class="avatar" src="https://i.pravatar.cc/100?img=2">
+<b>Sarah_Official</b>
+</div>
+<img class="photo" src="https://picsum.photos/id/1011/600/500">
+<div class="actions">
+<button onclick="like(this)">♡</button>
+<button onclick="comment()">💬</button>
+<button onclick="share()">↗</button>
+</div>
+<div class="caption">
+<b>Sarah_Official</b> Enjoying life! 💜
+<p>❤️ <span>120</span> likes</p>
+</div>
+</div>
+
+<div class="post">
+<div class="user">
+<img class="avatar" src="https://i.pravatar.cc/100?img=3">
+<b>David_Smile</b>
+</div>
+<img class="photo" src="https://picsum.photos/id/1015/600/500">
+<div class="actions">
+<button onclick="like(this)">♡</button>
+<button onclick="comment()">💬</button>
+<button onclick="share()">↗</button>
+</div>
+<div class="caption">
+<b>David_Smile</b> Beautiful moments! ✨
+<p>❤️ <span>85</span> likes</p>
+</div>
+</div>
+
+</div>
+</div>
+
+<div id="search" class="page">
+<div class="profile">
+<h2>Explore 🔍</h2>
+<input id="searchInput" placeholder="Search Bruta_Insta">
+<button class="primary" onclick="alert('Search feature coming soon!')">Search</button>
+</div>
+</div>
+
+<div id="create" class="page">
+<div class="profile">
+<h2>Create a post 📸</h2>
+<p>Choose a photo to share</p>
+<input type="file" id="photoInput" accept="image/*,video/*">
+<br>
+<button class="primary" onclick="upload()">Share post</button>
+</div>
+</div>
+
+<div id="activity" class="page">
+<div class="profile">
+<h2>Activity ❤️</h2>
+<p>Welcome to Bruta_Insta!</p>
+<p>Your notifications will appear here.</p>
+</div>
+</div>
+
+<div id="profile" class="page">
+<div class="profile">
+<img src="https://i.pravatar.cc/100?img=12">
+<h2>Bruta_Insta User</h2>
+<p>Welcome to my profile 💜</p>
+<p>0 Posts　 0 Followers　 0 Following</p>
+<button class="primary">Edit Profile</button>
+</div>
+</div>
+
+<nav>
+<button onclick="show('home')">🏠</button>
+<button onclick="show('search')">🔍</button>
+<button onclick="show('create')">➕</button>
+<button onclick="show('activity')">❤️</button>
+<button onclick="show('profile')">👤</button>
+</nav>
+
+<script>
+const tg=window.Telegram?.WebApp;
+tg?.ready();
+tg?.expand();
+
+function show(page){
+ document.querySelectorAll('.page').forEach(p=>{
+  p.classList.remove('active');
+ });
+ document.getElementById(page).classList.add('active');
+}
+
+function like(button){
+ button.textContent=button.textContent==='♡'?'❤️':'♡';
+}
+
+function comment(){
+ const message=prompt('Write your comment:');
+ if(message) alert('Comment added: '+message);
+}
+
+function share(){
+ if(navigator.share){
+  navigator.share({title:'Bruta_Insta',text:'Check out Bruta_Insta!'});
+ }else{
+  alert('Share Bruta_Insta with your friends!');
+ }
+}
+
+function upload(){
+ const file=document.getElementById('photoInput').files[0];
+ if(!file){alert('Please choose a photo first');return;}
+ const url=URL.createObjectURL(file);
+ const post=document.createElement('div');
+ post.className='post';
+ const img=document.createElement('img');
+ img.className='photo';
+ img.src=url;
+ post.appendChild(img);
+ post.innerHTML+='<div class="caption">Posted on Bruta_Insta 💜</div>';
+ document.getElementById('feed').prepend(post);
+ document.getElementById('photoInput').value='';
+ show('home');
+ alert('Your preview post has been added!');
+}
+</script>
+
+</body>
+</html>
