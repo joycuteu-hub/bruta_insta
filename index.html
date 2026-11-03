@@ -310,6 +310,80 @@ const supabaseClient = window.supabase.createClient(
 );
 
 console.log("Bruta_Insta connected to Supabase!");
+ // Show the login screen
+const authScreen = document.getElementById("auth-screen");
+authScreen.style.display = "block";
+authScreen.style.position = "fixed";
+authScreen.style.inset = "0";
+authScreen.style.zIndex = "9999";
+authScreen.style.overflowY = "auto";
+
+async function signUp() {
+  const username = document.getElementById("signup-username").value.trim();
+  const email = document.getElementById("signup-email").value.trim();
+  const password = document.getElementById("signup-password").value;
+
+  if (!username || !email || !password) {
+    alert("Please fill in all fields.");
+    return;
+  }
+
+  const { data, error } = await supabaseClient.auth.signUp({
+    email,
+    password
+  });
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  if (data.session) {
+    await supabaseClient.from("profiles")
+      .update({ username: username })
+      .eq("id", data.user.id);
+  }
+
+  alert("Account created! Check your email to confirm your account.");
+}
+
+async function logIn() {
+  const email = document.getElementById("login-email").value.trim();
+  const password = document.getElementById("login-password").value;
+
+  const { error } = await supabaseClient.auth.signInWithPassword({
+    email,
+    password
+  });
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  authScreen.style.display = "none";
+  alert("Welcome to Bruta_Insta!");
+}
 </script>
 </body>
+ <div id="auth-screen">
+  <h1>Bruta_Insta</h1>
+  <h2>Create your account</h2>
+
+  <input id="signup-username" type="text" placeholder="Username">
+  <input id="signup-email" type="email" placeholder="Email address">
+  <input id="signup-password" type="password" placeholder="Password">
+
+  <button onclick="signUp()">Sign Up</button>
+
+  <hr>
+
+  <h2>Already have an account?</h2>
+  <input id="login-email" type="email" placeholder="Email address">
+  <input id="login-password" type="password" placeholder="Password">
+
+  <button onclick="logIn()">Log In</button>
+
+  <p id="auth-message"></p>
+</div>
 </html>
